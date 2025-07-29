@@ -1,0 +1,202 @@
+[gd_scene load_steps=16 format=3 uid="uid://duxhx31rdjmlw"]
+
+[ext_resource type="Script" path="res://KinematicBody.gd" id="1_hhh0d"]
+[ext_resource type="AudioStream" uid="uid://nedicosl8axf" path="res://hit.wav" id="2_heeti"]
+[ext_resource type="MeshLibrary" uid="uid://drxhc70fbt2om" path="res://complete.tres" id="2_yj88y"]
+[ext_resource type="Script" path="res://TextBox.gd" id="5_sglsy"]
+[ext_resource type="AudioStream" uid="uid://bxcd1xcuf7y7b" path="res://background.wav" id="7_d74mf"]
+[ext_resource type="PackedScene" uid="uid://maxcnyfdcyle" path="res://sign.glb" id="7_fa37j"]
+[ext_resource type="Script" path="res://signmesh.gd" id="8_m0x07"]
+[ext_resource type="Script" path="res://sign.gd" id="9_qg6ow"]
+[ext_resource type="Script" path="res://UI.gd" id="10_k6trl"]
+
+[sub_resource type="SphereShape3D" id="11"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_yomyb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bjsnx"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Theme" id="Theme_5dijk"]
+Panel/styles/panel = SubResource("StyleBoxFlat_bjsnx")
+
+[sub_resource type="LabelSettings" id="LabelSettings_i6nxp"]
+font_size = 37
+font_color = Color(0.180005, 0.180005, 0.180005, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o1be8"]
+size = Vector3(0.807556, 1, 0.846252)
+
+[node name="Spatial" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.5, -2.18557e-08, 0, -4.37114e-08, 1, -0.5, 0.866025, 3.78552e-08, 0, 0, 0)
+shadow_enabled = true
+
+[node name="KinematicBody" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, -12)
+script = ExtResource("1_hhh0d")
+
+[node name="Camera" type="Camera3D" parent="KinematicBody"]
+transform = Transform3D(-2.18557e-08, 0.353553, -0.353553, 0, 0.353553, 0.353553, 0.5, 1.54543e-08, -1.54543e-08, -1.5, 2, 0)
+
+[node name="RayCast" type="RayCast3D" parent="KinematicBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+target_position = Vector3(-1, 0, 0)
+debug_shape_custom_color = Color(1, 0, 0.937255, 1)
+debug_shape_thickness = 5
+
+[node name="SubRayCast" type="RayCast3D" parent="KinematicBody"]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, -0.15, 0)
+target_position = Vector3(-1, 0, 0)
+debug_shape_custom_color = Color(1, 1, 1, 1)
+debug_shape_thickness = 5
+
+[node name="CollisionShape" type="CollisionShape3D" parent="KinematicBody"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.17, 0)
+shape = SubResource("11")
+
+[node name="GravityRayCast" type="RayCast3D" parent="KinematicBody"]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0.8, 0)
+target_position = Vector3(0, -0.8, 0)
+debug_shape_custom_color = Color(0.431373, 0.101961, 0.596078, 1)
+debug_shape_thickness = 5
+
+[node name="ClimbRayCast" type="RayCast3D" parent="KinematicBody"]
+target_position = Vector3(0, -0.3, 0)
+hit_from_inside = true
+debug_shape_custom_color = Color(0, 1, 0, 1)
+debug_shape_thickness = 5
+
+[node name="ClimbRayCast2" type="RayCast3D" parent="KinematicBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3077, 0)
+target_position = Vector3(0, -0.7, 0)
+hit_from_inside = true
+debug_shape_custom_color = Color(0, 1, 0, 1)
+debug_shape_thickness = 5
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="KinematicBody"]
+stream = ExtResource("2_heeti")
+volume_db = 3.019
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="KinematicBody"]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_yomyb")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_d74mf")
+autoplay = true
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 5
+script = ExtResource("10_k6trl")
+
+[node name="TextBox" type="NinePatchRect" parent="UI"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -147.0
+grow_horizontal = 2
+grow_vertical = 0
+region_rect = Rect2(263.25, 335.5, 249.25, 41)
+script = ExtResource("5_sglsy")
+
+[node name="Panel" type="Panel" parent="UI/TextBox"]
+layout_mode = 0
+offset_right = 1155.0
+offset_bottom = 144.0
+theme = SubResource("Theme_5dijk")
+
+[node name="Label" type="Label" parent="UI/TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 49.0
+offset_top = 31.0
+offset_right = -81.0
+offset_bottom = -27.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+text = "kmòjnljbnkòmà,òàmknbjkhèojhòglfuijpkèlpkjuftdyghkl,àò,kjhgcfhgjklmò,lkjkhjghknlmòjbkhvjhkbjlnòknbjvhkgjbjlnknbjhvgjkbnkknbjhvkgjhkbnknjbhvgchghvjcghfcgvjhvbcvh v nbvcgvn vcvn vtxfgchbj"
+label_settings = SubResource("LabelSettings_i6nxp")
+autowrap_mode = 1
+clip_text = true
+max_lines_visible = 2
+
+[node name="Button" type="Button" parent="UI/TextBox"]
+show_behind_parent = true
+layout_mode = 0
+offset_left = 987.0
+offset_top = 73.0
+offset_right = 1059.0
+offset_bottom = 145.0
+action_mode = 0
+shortcut_feedback = false
+shortcut_in_tooltip = false
+flat = true
+
+[node name="Button2" type="Button" parent="UI/TextBox"]
+show_behind_parent = true
+layout_mode = 0
+offset_left = 987.0
+offset_top = 73.0
+offset_right = 1059.0
+offset_bottom = 145.0
+action_mode = 0
+shortcut_feedback = false
+shortcut_in_tooltip = false
+flat = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="UI/TextBox"]
+
+[node name="sign" parent="." instance=ExtResource("7_fa37j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.75, 0, -7)
+script = ExtResource("8_m0x07")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="sign"]
+script = ExtResource("9_qg6ow")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="sign/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00643921, 0.330715, -0.00894165)
+shape = SubResource("BoxShape3D_o1be8")
+
+[node name="EarthGridMap" type="GridMap" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, -1, -8)
+mesh_library = ExtResource("2_yj88y")
+cell_size = Vector3(1, 1, 1)
+cell_center_x = false
+cell_center_z = false
+data = {
+"cells": PackedInt32Array(8, 65529, 1, 8, 65528, 1, 9, 65529, 1, 9, 65530, 1, 10, 65530, 1, 11, 65530, 1, 10, 65531, 1, 11, 65531, 1, 10, 65532, 1, 11, 65532, 1, 65535, 65535, 1, 65535, 0, 1, 65534, 0, 1, 0, 0, 1, 1, 0, 1, 1, 65535, 1, 2, 65535, 1, 3, 65535, 1, 4, 65535, 1, 2, 0, 1, 65535, 1, 1, 65534, 1, 1, 65533, 1, 1, 65533, 0, 1, 0, 65535, 1, 5, 65535, 1, 5, 65534, 1, 3, 0, 1, 4, 0, 1, 0, 1, 1, 1, 1, 1, 5, 0, 1)
+}
+metadata/_editor_floor_ = Vector3(0, 0, 0)
+
+[node name="WaterGridMap" type="GridMap" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, -1, -8)
+mesh_library = ExtResource("2_yj88y")
+cell_size = Vector3(1, 1, 1)
+cell_center_x = false
+cell_center_z = false
+data = {
+"cells": PackedInt32Array(2, 65534, 0, 3, 65533, 0, 2, 65533, 0, 2, 65532, 0, 3, 65532, 0, 3, 65531, 0, 3, 65530, 0, 3, 65529, 0, 4, 65529, 0, 4, 65528, 0, 5, 65529, 0, 5, 65528, 0, 6, 65528, 0, 6, 65529, 0, 7, 65528, 0, 7, 65529, 0)
+}
+
+[node name="GridMap3" type="GridMap" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, -0.92, -8)
+mesh_library = ExtResource("2_yj88y")
+cell_size = Vector3(1, 0.17, 1)
+cell_center_x = false
+cell_center_z = false
+data = {
+"cells": PackedInt32Array(131083, 65529, 1, 196619, 65528, 1, 262155, 65527, 1)
+}
+metadata/_editor_floor_ = Vector3(0, 4, 0)
+
+[connection signal="dialogue_started" from="KinematicBody" to="UI/TextBox" method="_on_KinematicBody_dialogue_started"]
+[connection signal="roteate" from="KinematicBody" to="sign" method="_roteate"]
+[connection signal="dialogue_finished" from="UI/TextBox" to="KinematicBody" method="_on_TextBox_dialogue_finished"]
+[connection signal="pressed" from="UI/TextBox/Button" to="UI/TextBox" method="_on_scroll_button_pressed"]
+[connection signal="pressed" from="UI/TextBox/Button2" to="UI/TextBox" method="_on_close_button_pressed"]

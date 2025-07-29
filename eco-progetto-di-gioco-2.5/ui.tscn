@@ -1,0 +1,71 @@
+[gd_scene load_steps=7 format=3 uid="uid://ddfho68gtk3ru"]
+
+[ext_resource type="Script" path="res://UI.gd" id="1_vy8m8"]
+[ext_resource type="Texture2D" uid="uid://d10qe3jhu6jji" path="res://button-uipng.png" id="2_dewmv"]
+[ext_resource type="Texture2D" uid="uid://sl16vvjv0fdd" path="res://menu-frame-9patch.png" id="3_d8o60"]
+[ext_resource type="Script" path="res://TextBox.gd" id="4_uaupq"]
+[ext_resource type="FontFile" uid="uid://cwynij0548sie" path="res://pokemon-dp-pro.otf" id="5_775y5"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_100og"]
+font = ExtResource("5_775y5")
+font_size = 33
+font_color = Color(0.321728, 0.321728, 0.321728, 1)
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_vy8m8")
+
+[node name="Container" type="Container" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+
+[node name="TextureRect" type="TextureRect" parent="Container"]
+layout_mode = 2
+texture = ExtResource("2_dewmv")
+expand_mode = 1
+
+[node name="TextureRect" type="TextureRect" parent="Container/TextureRect"]
+layout_mode = 0
+anchor_left = 0.5
+anchor_right = 0.5
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Container/TextureRect"]
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+text = "0"
+horizontal_alignment = 1
+
+[node name="TextBox" type="NinePatchRect" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -250.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("3_d8o60")
+patch_margin_left = 21
+patch_margin_top = 21
+patch_margin_right = 21
+patch_margin_bottom = 21
+script = ExtResource("4_uaupq")
+
+[node name="Label" type="Label" parent="TextBox"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 17.0
+offset_top = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "zfxdgcfhbjkbhvcx"
+label_settings = SubResource("LabelSettings_100og")
+clip_text = true
